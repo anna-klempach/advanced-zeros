@@ -17,37 +17,26 @@ module.exports = function getZerosCount(number, base) {
   		}
   	}
   }
-  
-  if(arrSimpleDivisors.length > 2 && arrSimpleDivisors[0] === 2){
-  	arrSimpleDivisors.shift();
-  	arrPower.shift();	
-  }
+  let arrTotalAmount = [];
+  let amount = 0;
+  let temp = number;
+  let k = 1;
 
-  let arrPowerNumber = [];
-  for(let i = 0; i <arrSimpleDivisors.length; i++){
-  	arrPowerNumber[i] = 0;
-  }
-  let buffer;
-  count = 0;
-
-  for(let i = arrSimpleDivisors[0]; i <= number; i++){
-  	buffer = i;
-  	for(let j = 0; j< arrSimpleDivisors.length; j++){
-  		while(buffer > 1 && buffer >= arrSimpleDivisors[j] && buffer%arrSimpleDivisors[j] === 0){
-  			buffer /=arrSimpleDivisors[j];
-  			arrPowerNumber[j] ++;
-  		}
+  for(let i = 0; i < arrSimpleDivisors.length; i++){
+  	while(temp >= Math.pow(arrSimpleDivisors[i], k)){
+  		amount+= Math.floor(temp / Math.pow(arrSimpleDivisors[i], k)) ;
+  		k++;
   	}
+  	arrTotalAmount[i] = Math.floor(amount/arrPower[i]);
+  	amount = 0;
+  	k = 1;
   }
-  
-  let pow;
-  let min = Math.floor(arrPowerNumber[0] / arrPower[0]);
-  for (let i = 1; i < arrPowerNumber.length; i++){
-     pow = Math.floor(arrPowerNumber[i] / arrPower[i]);
-     if (pow < min){
-     	min = pow;
-     } 
+ 
+  let min = arrTotalAmount[0];
+  for(let i = 1; i < arrTotalAmount.length; i++){
+  		if (arrTotalAmount[i] < min){
+  			min = arrTotalAmount[i];
+  		}
   }
- return min;
-
+  return min;
 }
